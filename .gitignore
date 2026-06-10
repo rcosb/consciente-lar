@@ -42,6 +42,9 @@ coverage/
 # Vercel
 .vercel/
 
+# Supabase temp
+supabase/.temp/
+
 # Agent / tooling
 .agents/
 skills-lock.json
