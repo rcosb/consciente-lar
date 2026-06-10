@@ -53,6 +53,55 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 195 46% 63%;
   }
+
+  .dark {
+    --background: 200 25% 8%;
+    --foreground: 195 30% 90%;
+
+    --card: 200 20% 12%;
+    --card-foreground: 195 30% 90%;
+
+    --popover: 200 20% 12%;
+    --popover-foreground: 195 30% 90%;
+
+    --primary: 195 50% 55%;
+    --primary-foreground: 200 25% 8%;
+
+    --primary-dark: 195 30% 85%;
+    --primary-soft: 195 30% 18%;
+
+    --secondary: 195 25% 18%;
+    --secondary-foreground: 195 30% 90%;
+
+    --muted: 200 15% 16%;
+    --muted-foreground: 195 15% 55%;
+
+    --accent: 195 25% 18%;
+    --accent-foreground: 195 30% 90%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 60% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 200 15% 20%;
+    --input: 200 15% 20%;
+    --ring: 195 50% 55%;
+
+    --gradient-hero: linear-gradient(135deg, hsl(200 25% 12%), hsl(200 20% 8%));
+    --shadow-soft: 0 4px 16px -4px hsl(195 50% 55% / 0.1);
+    --shadow-card: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
+
+    --sidebar-background: 200 20% 10%;
+    --sidebar-foreground: 195 30% 85%;
+    --sidebar-primary: 195 50% 55%;
+    --sidebar-primary-foreground: 200 25% 8%;
+    --sidebar-accent: 200 15% 16%;
+    --sidebar-accent-foreground: 195 30% 90%;
+    --sidebar-border: 200 15% 18%;
+    --sidebar-ring: 195 50% 55%;
+  }
 }
 
 @layer base {
@@ -61,7 +110,13 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+}
+
+@layer utilities {
+  .transition-theme {
+    @apply transition-all duration-300 ease-in-out;
   }
 }

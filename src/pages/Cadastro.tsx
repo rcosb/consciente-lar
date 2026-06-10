@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { GraduationCap, HandHeart } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -87,14 +89,15 @@ export default function Cadastro() {
       <div className="flex-1 py-12 px-4">
         <div className="container max-w-3xl">
           {!mode && (
-            <>
+            <FadeIn>
               <h1 className="text-3xl font-bold text-center text-[hsl(var(--primary-dark))]">
                 Como você quer participar?
               </h1>
               <div className="mt-10 grid md:grid-cols-2 gap-6">
-                <button
+                <motion.button
+                  whileHover={{ y: -4 }}
                   onClick={() => setMode("volunteer")}
-                  className="text-left bg-background border border-border rounded-2xl p-8 hover:border-primary hover:shadow-[var(--shadow-soft)] transition"
+                  className="text-left bg-card border border-border rounded-2xl p-8 hover:border-primary hover:shadow-[var(--shadow-soft)] transition-colors"
                 >
                   <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center">
                     <HandHeart className="h-6 w-6 text-primary" />
@@ -105,10 +108,11 @@ export default function Cadastro() {
                   <p className="mt-2 text-muted-foreground">
                     Quero doar meu conhecimento criando cursos gratuitos.
                   </p>
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileHover={{ y: -4 }}
                   onClick={() => setMode("aluno")}
-                  className="text-left bg-background border border-border rounded-2xl p-8 hover:border-primary hover:shadow-[var(--shadow-soft)] transition"
+                  className="text-left bg-card border border-border rounded-2xl p-8 hover:border-primary hover:shadow-[var(--shadow-soft)] transition-colors"
                 >
                   <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center">
                     <GraduationCap className="h-6 w-6 text-primary" />
@@ -120,9 +124,9 @@ export default function Cadastro() {
                     Sou pai/mãe adotante ou trabalho em uma instituição de
                     acolhimento.
                   </p>
-                </button>
+                </motion.button>
               </div>
-            </>
+            </FadeIn>
           )}
 
           {mode === "aluno" && !alunoSub && (
@@ -152,7 +156,8 @@ export default function Cadastro() {
           )}
 
           {(mode === "volunteer" || (mode === "aluno" && alunoSub)) && (
-            <div className="bg-background border border-border rounded-2xl p-8 shadow-[var(--shadow-card)]">
+            <FadeIn>
+              <div className="bg-card border border-border rounded-2xl p-8 shadow-[var(--shadow-card)]">
               <button
                 onClick={() => {
                   if (mode === "aluno" && alunoSub) setAlunoSub(null);
@@ -268,7 +273,8 @@ export default function Cadastro() {
                   </Button>
                 </div>
               </form>
-            </div>
+              </div>
+            </FadeIn>
           )}
 
           <p className="mt-6 text-sm text-center text-muted-foreground">

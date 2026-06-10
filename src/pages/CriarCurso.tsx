@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,17 +61,18 @@ export default function CriarCurso() {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <main className="flex-1 container py-10 max-w-2xl">
-        <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
-          Criar Novo Curso
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Compartilhe seu conhecimento com a comunidade.
-        </p>
+        <FadeIn>
+          <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
+            Criar Novo Curso
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Compartilhe seu conhecimento com a comunidade.
+          </p>
 
-        <form
-          onSubmit={submit}
-          className="mt-8 bg-background border border-border rounded-2xl p-6 space-y-5 shadow-[var(--shadow-card)]"
-        >
+          <form
+            onSubmit={submit}
+            className="mt-8 bg-card border border-border rounded-2xl p-6 space-y-5 shadow-[var(--shadow-card)]"
+          >
           <div>
             <Label htmlFor="title">Título</Label>
             <Input
@@ -128,7 +130,8 @@ export default function CriarCurso() {
           <Button type="submit" size="lg" className="w-full" disabled={loading}>
             {loading ? "Publicando..." : "Publicar Curso"}
           </Button>
-        </form>
+          </form>
+        </FadeIn>
       </main>
     </div>
   );

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
@@ -18,9 +20,11 @@ export default function MeusCursos() {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <main className="flex-1 container py-10">
-        <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
-          Meus Cursos
-        </h1>
+        <FadeIn>
+          <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
+            Meus Cursos
+          </h1>
+        </FadeIn>
         {items.length === 0 ? (
           <div className="mt-8 border border-dashed border-border rounded-2xl p-12 text-center">
             <p className="text-muted-foreground">
@@ -32,10 +36,14 @@ export default function MeusCursos() {
           </div>
         ) : (
           <div className="mt-8 space-y-3">
-            {items.map((e) => (
-              <div
+            {items.map((e, i) => (
+              <motion.div
                 key={e.id}
-                className="bg-background border border-border rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-[var(--shadow-card)]"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ y: -2, transition: { type: "spring", stiffness: 300 } }}
+                className="bg-card border border-border rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 shadow-[var(--shadow-card)]"
               >
                 <div>
                   <span className="inline-block text-xs font-medium px-2 py-1 rounded-md bg-secondary text-[hsl(var(--primary-dark))]">
@@ -52,7 +60,7 @@ export default function MeusCursos() {
                 <Button variant="outline" asChild>
                   <Link to={`/curso/${e.course_id}`}>Ver Curso</Link>
                 </Button>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}

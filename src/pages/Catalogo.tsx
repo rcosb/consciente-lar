@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import AppHeader from "@/components/AppHeader";
+import FadeIn from "@/components/FadeIn";
 import {
   Select,
   SelectContent,
@@ -32,30 +34,32 @@ export default function Catalogo() {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <main className="flex-1 container py-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
-              Catálogo de Cursos
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Cursos gratuitos criados por profissionais voluntários.
-            </p>
+        <FadeIn>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
+                Catálogo de Cursos
+              </h1>
+              <p className="text-muted-foreground mt-1">
+                Cursos gratuitos criados por profissionais voluntários.
+              </p>
+            </div>
+            <div className="md:w-64">
+              <Select value={filter} onValueChange={(v) => setFilter(v as Category | "all")}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {CATEGORIES.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c === "all" ? "Todas as Categorias" : c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div className="md:w-64">
-            <Select value={filter} onValueChange={(v) => setFilter(v as Category | "all")}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CATEGORIES.map((c) => (
-                  <SelectItem key={c} value={c}>
-                    {c === "all" ? "Todas as Categorias" : c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+        </FadeIn>
 
         {courses.length === 0 ? (
           <p className="mt-12 text-center text-muted-foreground">
@@ -63,11 +67,17 @@ export default function Catalogo() {
           </p>
         ) : (
           <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {courses.map((c) => (
-              <Link
+            {courses.map((c, i) => (
+              <motion.div
                 key={c.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ y: -4, transition: { type: "spring", stiffness: 300 } }}
+              >
+              <Link
                 to={`/curso/${c.id}`}
-                className="block bg-background border border-border rounded-xl p-5 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] hover:border-primary/40 transition"
+                className="block h-full bg-card border border-border rounded-xl p-5 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] hover:border-primary/40 transition-colors"
               >
                 <span className="inline-block text-xs font-medium px-2 py-1 rounded-md bg-secondary text-[hsl(var(--primary-dark))]">
                   {c.category}
@@ -90,6 +100,7 @@ export default function Catalogo() {
                   Publicado em {new Date(c.created_at).toLocaleDateString("pt-BR")}
                 </p>
               </Link>
+              </motion.div>
             ))}
           </div>
         )}

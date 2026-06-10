@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function AppHeader() {
   const { profile, signOut } = useAuth();
@@ -46,6 +47,7 @@ export default function AppHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {profile ? (
             <Button
               variant="ghost"

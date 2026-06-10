@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,7 +33,8 @@ export default function Login() {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <div className="flex-1 flex items-center justify-center py-12 px-4">
-        <div className="w-full max-w-md bg-background border border-border rounded-2xl shadow-[var(--shadow-soft)] p-8">
+        <FadeIn>
+        <div className="w-full max-w-md bg-card border border-border rounded-2xl shadow-[var(--shadow-soft)] p-8">
           <h1 className="text-2xl font-bold text-[hsl(var(--primary-dark))]">Entrar</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Acesse sua conta no Portal ConscienteLar
@@ -68,7 +70,8 @@ export default function Login() {
               Cadastre-se
             </Link>
           </p>
-        </div>
+          </div>
+        </FadeIn>
       </div>
     </div>
   );

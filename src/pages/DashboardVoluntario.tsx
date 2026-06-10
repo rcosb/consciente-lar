@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { Plus, BookOpen, Pencil, Trash2 } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,21 +47,23 @@ export default function DashboardVoluntario() {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <main className="flex-1 container py-10">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
-              Olá, {profile?.full_name}!
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Gerencie e crie cursos para a comunidade.
-            </p>
+        <FadeIn>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl font-bold text-[hsl(var(--primary-dark))]">
+                Olá, {profile?.full_name}!
+              </h1>
+              <p className="text-muted-foreground mt-1">
+                Gerencie e crie cursos para a comunidade.
+              </p>
+            </div>
+            <Button size="lg" asChild>
+              <Link to="/criar-curso">
+                <Plus className="h-5 w-5 mr-2" /> Criar Novo Curso
+              </Link>
+            </Button>
           </div>
-          <Button size="lg" asChild>
-            <Link to="/criar-curso">
-              <Plus className="h-5 w-5 mr-2" /> Criar Novo Curso
-            </Link>
-          </Button>
-        </div>
+        </FadeIn>
 
         <section className="mt-10">
           <h2 className="text-xl font-semibold text-[hsl(var(--primary-dark))]">
@@ -77,10 +81,14 @@ export default function DashboardVoluntario() {
             </div>
           ) : (
             <div className="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {courses.map((c) => (
-                <div
+              {courses.map((c, i) => (
+                <motion.div
                   key={c.id}
-                  className="bg-background border border-border rounded-xl p-5 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] hover:border-primary/40 transition"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  whileHover={{ y: -4, transition: { type: "spring", stiffness: 300 } }}
+                  className="bg-card border border-border rounded-xl p-5 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-soft)] hover:border-primary/40 transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="inline-block text-xs font-medium px-2 py-1 rounded-md bg-secondary text-[hsl(var(--primary-dark))]">
@@ -114,7 +122,7 @@ export default function DashboardVoluntario() {
                       {new Date(c.created_at).toLocaleDateString("pt-BR")}
                     </p>
                   </Link>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}

@@ -1,7 +1,9 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { CheckCircle2, Flag, MessageSquare } from "lucide-react";
+import FadeIn from "@/components/FadeIn";
 import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -157,7 +159,8 @@ useEffect(() => {
     <div className="min-h-screen flex flex-col">
       <AppHeader />
       <main className="flex-1 container py-10 max-w-4xl">
-        <div className="flex items-start justify-between gap-4">
+        <FadeIn>
+          <div className="flex items-start justify-between gap-4">
           <div>
             <span className="inline-block text-xs font-medium px-2.5 py-1 rounded-md bg-secondary text-[hsl(var(--primary-dark))]">
               {course.category}
@@ -206,9 +209,15 @@ useEffect(() => {
               </DialogContent>
             </Dialog>
           )}
-        </div>
+          </div>
+        </FadeIn>
 
-        <div className="mt-8 aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-[var(--shadow-soft)]">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="mt-8 aspect-video w-full rounded-2xl overflow-hidden bg-black shadow-[var(--shadow-soft)]"
+        >
           <iframe
             src={toEmbed(course.video_url)}
             title={course.title}
@@ -216,11 +225,12 @@ useEffect(() => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
-        </div>
+        </motion.div>
 
-        <section className="mt-8">
-          <h2 className="text-xl font-semibold text-[hsl(var(--primary-dark))]">
-            Sobre o curso
+        <FadeIn delay={3}>
+          <section className="mt-8">
+            <h2 className="text-xl font-semibold text-[hsl(var(--primary-dark))]">
+              Sobre o curso
           </h2>
           <p className="mt-3 text-muted-foreground whitespace-pre-line">
             {course.description}
@@ -380,7 +390,8 @@ useEffect(() => {
               </div>
             ))}
           </div>
-        </section>
+          </section>
+        </FadeIn>
       </main>
     </div>
   );
